@@ -120,6 +120,9 @@ resource "aws_lambda_function" "sqs_lambda" {
   reserved_concurrent_executions = "${var.lambda_concurrent_executions}"
   timeout                        = "${var.lambda_timeout}"
   memory_size                    = "${var.lambda_memory_size}"
+  tracing_config {
+    mode = "PassThrough"
+  }
 
   environment {
     variables = {
