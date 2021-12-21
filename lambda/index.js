@@ -10,14 +10,12 @@ exports.handler = (event, context, callback) => {
 
     event.Records.forEach(record => {
 
-        console.info("SNS Record: ", record);
-
         const body = JSON.parse(record.body);
         const message = JSON.parse(body.Message);
 
         console.info("SQS Message: ", message);
 
-        if (!message.distribution_id || message.paths.size < 1) {
+        if (!message.distribution_id || message.paths.length  < 1) {
             const msg = `[WARNING] bad format. desired SNS message format: {\"distribution_id\": \"<distid>\", \"paths\": [\"/a/path/*\"]}`;
             console.log(msg);
             callback(null, msg);
@@ -29,7 +27,7 @@ exports.handler = (event, context, callback) => {
             InvalidationBatch: {
                 CallerReference: new Date().getTime().toString(),
                 Paths: {
-                    Quantity: message.paths.size,
+                    Quantity: message.paths.length ,
                     Items: message.paths
                 }
             }
