@@ -10,6 +10,8 @@ exports.handler = (event, context, callback) => {
 
     event.Records.forEach(record => {
 
+        console.info("SNS Record: ", record);
+
         const body = JSON.parse(record.body);
         const message = JSON.parse(body.Message);
 
