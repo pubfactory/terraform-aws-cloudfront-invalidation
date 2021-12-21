@@ -15,7 +15,7 @@ exports.handler = (event, context, callback) => {
 
         console.info("SQS Message: ", message);
 
-        if (!message.distribution_id || !message.path) {
+        if (!message.distribution_id || message.paths.size < 1) {
             const msg = `[WARNING] bad format. desired SNS message format: {\"distribution_id\": \"<distid>\", \"paths\": [\"/a/path/*\"]}`;
             console.log(msg);
             callback(null, msg);
