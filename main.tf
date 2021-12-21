@@ -78,7 +78,7 @@ variable "tags" {
 }
 
 locals {
-  tags = "${merge(var.tags, tomap("terraform-module" = "github.com/pubfactory/tf/infrastructure/cloudfront/invalidation"))}"
+  tags = "${merge(var.tags, tomap({"terraform-module" = "github.com/pubfactory/tf/infrastructure/cloudfront/invalidation"}))}"
 }
 
 provider "aws" {
