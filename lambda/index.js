@@ -16,7 +16,7 @@ exports.handler = (event, context, callback) => {
         console.info("SQS Message: ", message);
 
         if (!message.distribution_id || !message.path) {
-            const msg = `[WARNING] bad format. desired SNS message format: {\"distribution_id\": \"<distid>\", \"path\": \"/a/path/*\"}`;
+            const msg = `[WARNING] bad format. desired SNS message format: {\"distribution_id\": \"<distid>\", \"paths\": [\"/a/path/*\"]}`;
             console.log(msg);
             callback(null, msg);
             return;
@@ -27,8 +27,8 @@ exports.handler = (event, context, callback) => {
             InvalidationBatch: {
                 CallerReference: new Date().getTime().toString(),
                 Paths: {
-                    Quantity: 1,
-                    Items: [message.path]
+                    Quantity: message.paths.size,
+                    Items: message.paths
                 }
             }
         };
